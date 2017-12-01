@@ -695,7 +695,12 @@ static const struct  cfsip_methods {
 	{ SIP_BYE,       NO_RTP, "BYE",      CAN_NOT_CREATE_DIALOG },
 	{ SIP_REFER,     NO_RTP, "REFER",    CAN_CREATE_DIALOG },
 	{ SIP_SUBSCRIBE, NO_RTP, "SUBSCRIBE",CAN_CREATE_DIALOG },
-	{ SIP_MESSAGE,   NO_RTP, "MESSAGE",  CAN_CREATE_DIALOG },
+	/*
+	 * We experienced some problems with MESSAGE after one client disconnected
+	 * and anther sent too much messages. So, we decided just to reject MESSAGE if
+	 * dialog was already closed
+	 */
+	{ SIP_MESSAGE,   NO_RTP, "MESSAGE",  CAN_NOT_CREATE_DIALOG },
 	{ SIP_UPDATE,    NO_RTP, "UPDATE",   CAN_NOT_CREATE_DIALOG },
 	{ SIP_INFO,      NO_RTP, "INFO",     CAN_NOT_CREATE_DIALOG },
 	{ SIP_CANCEL,    NO_RTP, "CANCEL",   CAN_NOT_CREATE_DIALOG },
